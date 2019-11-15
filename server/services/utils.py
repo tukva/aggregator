@@ -32,13 +32,12 @@ async def get_aggr_teams(request):
     return teams
 
 
-async def get_aggr_teams_by_link_id(request, session, link_id):
+async def get_aggr_teams_by_link_id(request, link_id):
     teams = {}
-    async with session.get('http://localhost:8000/parse-links/{link_id}/teams'.format(link_id=link_id)) as resp:
-        teams[link_id] = await resp.json()
+    resp = await client.get_teams_by_link(link_id)
+    teams[link_id] = resp["json"]
     if request.args.get("team"):
         close_matches = await match_teams(request.args.get("team"), teams)
         return close_matches
-    async with session.get('http://localhost:8000/real-teams') as resp:
-        teams["real teams"] = await resp.json()
-        return teams
+    teams["real teams"] = await client.get_real_teams()
+    return teams
