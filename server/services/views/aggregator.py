@@ -1,4 +1,3 @@
-import aiohttp
 from sanic.response import json
 
 from services.utils import get_aggr_teams, get_aggr_teams_by_link_id

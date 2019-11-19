@@ -1,9 +1,9 @@
 import difflib
 
-from common.rest_client.base_clients import BaseClientParser
+from common.rest_client.base_client_parser import BaseClientParser
 
 
-client = BaseClientParser(host='http://localhost', port=8000)
+client = BaseClientParser()
 
 
 async def match_teams(real_team, all_teams):
@@ -21,9 +21,9 @@ async def get_aggr_teams(request):
     teams = {}
     while True:
         resp = await client.get_teams_by_link(link_id)
-        if resp["status"] == 404:
+        if resp.status == 404:
             break
-        teams[link_id] = resp["json"]
+        teams[link_id] = resp.json
         link_id += 1
     if request.args.get("team"):
         close_matches = await match_teams(request.args.get("team"), teams)
@@ -35,7 +35,7 @@ async def get_aggr_teams(request):
 async def get_aggr_teams_by_link_id(request, link_id):
     teams = {}
     resp = await client.get_teams_by_link(link_id)
-    teams[link_id] = resp["json"]
+    teams[link_id] = resp.json
     if request.args.get("team"):
         close_matches = await match_teams(request.args.get("team"), teams)
         return close_matches
