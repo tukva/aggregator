@@ -20,7 +20,7 @@ async def get_aggr_teams(request):
     link_id = 1
     teams = {}
     while True:
-        resp = await client.get_teams_by_link(link_id)
+        resp = await client.get_by_link(link_id, params='teams')
         if resp.status == 404:
             break
         teams[link_id] = resp.json
@@ -28,16 +28,16 @@ async def get_aggr_teams(request):
     if request.args.get("team"):
         close_matches = await match_teams(request.args.get("team"), teams)
         return close_matches
-    teams["real teams"] = await client.get_real_teams()
+    teams["real teams"] = await client.get_all_links(params='real_teams')
     return teams
 
 
 async def get_aggr_teams_by_link_id(request, link_id):
     teams = {}
-    resp = await client.get_teams_by_link(link_id)
+    resp = await client.get_by_link(link_id, params='teams')
     teams[link_id] = resp.json
     if request.args.get("team"):
         close_matches = await match_teams(request.args.get("team"), teams)
         return close_matches
-    teams["real teams"] = await client.get_real_teams()
+    teams["real teams"] = await client.get_all_links(params='real_teams')
     return teams
