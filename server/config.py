@@ -8,7 +8,7 @@ POSTGRES_PASSWORD = getenv("POSTGRES_PASSWORD", "test")
 DB_POOL_SIZE_MIN = getenv("DB_POOL_SIZE_MIN", 1)
 DB_POOL_SIZE_MAX = getenv("DB_POOL_SIZE_MAX", 6)
 
-AGGREGATOR_API_HOST = int(getenv('AGGREGATOR_API_HOST', 3000))
+AGGREGATOR_API_POST = int(getenv('AGGREGATOR_API_POST', 3000))
 
 url = 'postgres://{0}:{1}@{2}:{3}/{4}'.format(POSTGRES_USER,
                                               POSTGRES_PASSWORD,
