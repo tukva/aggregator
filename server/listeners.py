@@ -1,4 +1,4 @@
-from common.rest_client.base_client_parser import BaseClientBettingData
+from common.rest_client.base_client_betting_data import BaseClientBettingData
 
 from engine import Engine
 
