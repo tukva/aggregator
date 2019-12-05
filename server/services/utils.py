@@ -1,9 +1,9 @@
 import difflib
 
-from common.rest_client.base_client_parser import BaseClientParser
+from common.rest_client.base_client_parser import BaseClientBettingData
 
 
-client = BaseClientParser()
+client = BaseClientBettingData()
 
 
 async def match_teams(real_team, all_teams):

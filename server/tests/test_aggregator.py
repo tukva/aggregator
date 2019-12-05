@@ -3,12 +3,12 @@ import pytest
 
 @pytest.mark.aggregator
 async def test_aggregator(test_cli):
-    resp = await test_cli.get('/aggregator')
+    resp = await test_cli.get('/aggregate')
 
     assert resp.status == 200
     assert len(await resp.json()) == 5
 
-    resp = await test_cli.get('/aggregator/?team=chelsea')
+    resp = await test_cli.get('/aggregate/?team=chelsea')
     resp_json = await resp.json()
     assert resp.status == 200
     assert len(resp_json) == 5
@@ -18,12 +18,12 @@ async def test_aggregator(test_cli):
 
 @pytest.mark.aggregator
 async def test_aggregator_by_link(test_cli):
-    resp = await test_cli.get('/aggregator/1')
+    resp = await test_cli.get('/aggregate/1')
 
     assert resp.status == 200
     assert len(await resp.json()) == 2
 
-    resp = await test_cli.get('/aggregator/1/?team=chelsea')
+    resp = await test_cli.get('/aggregate/1/?team=chelsea')
     resp_json = await resp.json()
     assert resp.status == 200
     assert len(resp_json) == 2

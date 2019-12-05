@@ -1,9 +1,9 @@
-from common.rest_client.base_client_parser import BaseClientParser
+from common.rest_client.base_client_parser import BaseClientBettingData
 
 from engine import Engine
 
 
-client = BaseClientParser()
+client = BaseClientBettingData()
 
 
 async def acquire_con(app, loop):
