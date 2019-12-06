@@ -20,9 +20,3 @@ async def test_close_connection():
             assert False
     except RuntimeError:
         assert True
-
-
-@pytest.mark.smoke
-async def test_server(test_cli):
-    await test_cli.get('/real-team')
-    assert True

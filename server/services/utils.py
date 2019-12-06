@@ -7,7 +7,7 @@ client = BaseClientBettingData()
 
 
 async def match_teams(real_team, all_teams):
-    result = {"real_team": real_team}
+    result = {"real_teams": real_team}
     for i in range(1, len(all_teams) + 1):
         teams_by_link = []
         for team in all_teams[i]:
@@ -28,7 +28,8 @@ async def get_aggr_teams(request):
     if request.args.get("team"):
         close_matches = await match_teams(request.args.get("team"), teams)
         return close_matches
-    teams["real teams"] = await client.get_all_links(params='real_teams')
+    resp = await client.get_all_links(params='real_teams')
+    teams["real_teams"] = resp.json
     return teams
 
 
@@ -39,5 +40,6 @@ async def get_aggr_teams_by_link_id(request, link_id):
     if request.args.get("team"):
         close_matches = await match_teams(request.args.get("team"), teams)
         return close_matches
-    teams["real teams"] = await client.get_all_links(params='real_teams')
+    resp = await client.get_all_links(params='real_teams')
+    teams["real_teams"] = resp.json
     return teams
