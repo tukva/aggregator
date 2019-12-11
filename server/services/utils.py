@@ -17,17 +17,18 @@ async def match_teams(real_team, all_teams):
 
 
 async def get_aggr_teams(request, link_id=None):
+    teams = {}
     if link_id:
         resp = await client.get_teams(link_id)
+        teams[link_id] = resp.json
     else:
         resp = await client.get_teams()
-    resp_json = resp.json
-    teams = {}
-    for team in resp_json:
-        if team["link_id"] in teams:
-            teams[team["link_id"]].append(team)
-        else:
-            teams[team["link_id"]] = []
+        resp_json = resp.json
+        for team in resp_json:
+            if team["link_id"] in teams:
+                teams[team["link_id"]].append(team)
+            else:
+                teams[team["link_id"]] = []
     if request.args.get("team"):
         close_matches = await match_teams(request.args.get("team"), teams)
         return close_matches
