@@ -12,14 +12,14 @@ async def test_aggregator(test_cli, mock_resp_teams, mock_resp_real_teams):
             resp = await test_cli.get('/aggregate')
 
             assert resp.status == HTTPStatus.OK
-            assert await resp.json() == {'1': [{'name': 'chelsea', 'link_id': 1},
+            assert await resp.json() == {'teams': [{'name': 'chelsea', 'link_id': 1},
                                                {'name': 'manchester united', 'link_id': 1}],
                                          'real_teams': [{'name': 'FC Chelsea'}, {'name': 'Liverpool'}]}
 
             resp = await test_cli.get('/aggregate?team=FC Chelsea')
 
             assert resp.status == HTTPStatus.OK
-            assert await resp.json() == {'1': ['chelsea', 'manchester united'],
+            assert await resp.json() == {'teams': ['chelsea', 'manchester united'],
                                          'real_teams': 'FC Chelsea'}
 
 
@@ -27,15 +27,15 @@ async def test_aggregator(test_cli, mock_resp_teams, mock_resp_real_teams):
 async def test_aggregator_by_link(test_cli, mock_resp_teams, mock_resp_real_teams):
     with mock.patch.object(BaseClientBettingData, 'get_teams', return_value=mock_resp_teams):
         with mock.patch.object(BaseClientBettingData, 'get_real_teams', return_value=mock_resp_real_teams):
-            resp = await test_cli.get('/aggregate/1')
+            resp = await test_cli.get('/aggregate?link_id=1')
 
             assert resp.status == HTTPStatus.OK
-            assert await resp.json() == {'1': [{'name': 'chelsea', 'link_id': 1},
+            assert await resp.json() == {'teams': [{'name': 'chelsea', 'link_id': 1},
                                                {'name': 'manchester united', 'link_id': 1}],
                                          'real_teams': [{'name': 'FC Chelsea'}, {'name': 'Liverpool'}]}
 
-            resp = await test_cli.get('/aggregate/1/?team=FC Chelsea')
+            resp = await test_cli.get('/aggregate/?team=FC Chelsea&link_id=1')
 
             assert resp.status == HTTPStatus.OK
-            assert await resp.json() == {'1': ['chelsea', 'manchester united'],
+            assert await resp.json() == {'teams': ['chelsea', 'manchester united'],
                                          'real_teams': 'FC Chelsea'}
