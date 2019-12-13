@@ -15,11 +15,11 @@ async def match_teams(team_for_match, teams):
 async def get_aggr_teams(team_for_match=None, link_id=None):
     teams = {}
     client = BaseClientBettingData()
-    resp = await client.get_teams(link_id)
-    teams["teams"] = resp.json
+    resp_teams = await client.get_teams(link_id)
+    teams["teams"] = resp_teams
     if team_for_match:
         close_match_teams = await match_teams(team_for_match, teams)
         return close_match_teams
-    resp = await client.get_real_teams()
-    teams["real_teams"] = resp.json
+    resp_real_teams = await client.get_real_teams()
+    teams["real_teams"] = resp_real_teams
     return teams
