@@ -31,19 +31,13 @@ async def connection():
 
 @pytest.fixture
 async def mock_resp_teams(test_cli):
-    class Response:
-        json = [{"name": "chelsea", "link_id": 1}, {"name": "manchester united", "link_id": 1}]
-
     future = asyncio.Future()
-    future.set_result(Response())
+    future.set_result([{"name": "chelsea", "link_id": 1}, {"name": "manchester united", "link_id": 1}])
     return future
 
 
 @pytest.fixture
 async def mock_resp_real_teams(test_cli):
-    class Response:
-        json = [{"name": "FC Chelsea"}, {"name": "Liverpool"}]
-
     future = asyncio.Future()
-    future.set_result(Response())
+    future.set_result([{"name": "FC Chelsea"}, {"name": "Liverpool"}])
     return future

@@ -8,7 +8,7 @@ from services.utils import get_aggr_teams
 
 class AggrTeams(HTTPMethodView):
     async def get(self, request):
-        team_for_match = request.args.get("team")
-        link_id = request.args.get("link_id")
-        result = await get_aggr_teams(team_for_match, link_id)
+        team_for_match = request.raw_args.get("team")
+        params = request.raw_args
+        result = await get_aggr_teams(team_for_match, **params)
         return json(result, HTTPStatus.OK)

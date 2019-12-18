@@ -12,10 +12,10 @@ async def match_teams(team_for_match, teams):
     return result
 
 
-async def get_aggr_teams(team_for_match=None, link_id=None):
+async def get_aggr_teams(team_for_match=None, **kwargs):
     teams = {}
     client = BaseClientBettingData()
-    resp_teams = await client.get_teams(link_id)
+    resp_teams = await client.get_teams(**kwargs)
     teams["teams"] = resp_teams
     if team_for_match:
         close_match_teams = await match_teams(team_for_match, teams)
